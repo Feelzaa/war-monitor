@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from 'react-leaflet'
 import { severityConfig } from '../data/conflicts'
 import 'leaflet/dist/leaflet.css'
@@ -20,31 +20,29 @@ function ConflictMarker({ conflict, isSelected, onSelect }) {
 
   return (
     <>
-      {/* Pulse ring for critical/high */}
       {sev.pulse && (
         <CircleMarker
           center={[conflict.lat, conflict.lng]}
-          radius={radius + 8}
+          radius={radius + 10}
           pathOptions={{
             color: sev.color,
             fillColor: sev.color,
-            fillOpacity: 0.1,
+            fillOpacity: 0.08,
             weight: 1,
-            opacity: 0.3,
+            opacity: 0.25,
             className: 'conflict-marker-pulse',
           }}
         />
       )}
 
-      {/* Main marker */}
       <CircleMarker
         center={[conflict.lat, conflict.lng]}
-        radius={isSelected ? radius + 3 : radius}
+        radius={isSelected ? radius + 4 : radius}
         pathOptions={{
-          color: isSelected ? '#ffffff' : sev.color,
+          color: isSelected ? '#22d3ee' : sev.color,
           fillColor: sev.color,
-          fillOpacity: isSelected ? 0.9 : 0.6,
-          weight: isSelected ? 2 : 1.5,
+          fillOpacity: isSelected ? 0.9 : 0.55,
+          weight: isSelected ? 2.5 : 1.5,
         }}
         eventHandlers={{
           click: () => onSelect(isSelected ? null : conflict),
@@ -54,49 +52,50 @@ function ConflictMarker({ conflict, isSelected, onSelect }) {
           <div className="space-y-2">
             <div className="flex items-center gap-2">
               <span
-                className="inline-block w-2 h-2 rounded-full"
-                style={{ backgroundColor: sev.color }}
+                className="inline-block w-2.5 h-2.5 rounded-full shadow-lg"
+                style={{ backgroundColor: sev.color, boxShadow: `0 0 8px ${sev.color}60` }}
               />
-              <span className="font-bold text-sm text-gray-100">{conflict.name}</span>
+              <span className="font-bold text-sm text-slate-100">{conflict.name}</span>
             </div>
             <div className="flex flex-wrap gap-1.5">
               <span
-                className="text-[10px] px-1.5 py-0.5 rounded font-mono uppercase"
+                className="text-[10px] px-1.5 py-0.5 rounded-md font-mono uppercase font-medium"
                 style={{
                   backgroundColor: sev.color + '20',
                   color: sev.color,
+                  border: `1px solid ${sev.color}30`,
                 }}
               >
                 {sev.label}
               </span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-700/50 text-gray-400">
+              <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-slate-700/50 text-slate-400 border border-slate-600/30">
                 {conflict.type}
               </span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-gray-700/50 text-gray-400">
+              <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-slate-700/50 text-slate-400 border border-slate-600/30">
                 {conflict.region}
               </span>
             </div>
-            <p className="text-xs text-gray-400 leading-relaxed">{conflict.description}</p>
-            <div className="grid grid-cols-2 gap-2 text-[10px] pt-1 border-t border-gray-700/50">
+            <p className="text-xs text-slate-400 leading-relaxed">{conflict.description}</p>
+            <div className="grid grid-cols-2 gap-2 text-[10px] pt-2 border-t border-slate-700/50">
               <div>
-                <span className="text-gray-500">Casualties:</span>
-                <div className="text-red-400 font-mono">{conflict.casualties}</div>
+                <span className="text-slate-500">Casualties:</span>
+                <div className="font-mono font-medium" style={{ color: '#ff4757' }}>{conflict.casualties}</div>
               </div>
               <div>
-                <span className="text-gray-500">Displaced:</span>
-                <div className="text-amber-400 font-mono">{conflict.displaced}</div>
+                <span className="text-slate-500">Displaced:</span>
+                <div className="font-mono font-medium" style={{ color: '#ffa502' }}>{conflict.displaced}</div>
               </div>
               <div>
-                <span className="text-gray-500">Started:</span>
-                <div className="text-gray-300 font-mono">{conflict.startDate}</div>
+                <span className="text-slate-500">Started:</span>
+                <div className="text-slate-300 font-mono">{conflict.startDate}</div>
               </div>
               <div>
-                <span className="text-gray-500">Updated:</span>
-                <div className="text-emerald-400 font-mono">{conflict.lastUpdate}</div>
+                <span className="text-slate-500">Updated:</span>
+                <div className="text-cyan-400 font-mono">{conflict.lastUpdate}</div>
               </div>
             </div>
-            <div className="text-[10px] text-gray-500">
-              <span className="font-medium text-gray-400">Parties:</span>{' '}
+            <div className="text-[10px] text-slate-500 pt-1">
+              <span className="font-medium text-slate-400">Parties:</span>{' '}
               {conflict.parties.join(' vs ')}
             </div>
           </div>
@@ -108,8 +107,7 @@ function ConflictMarker({ conflict, isSelected, onSelect }) {
 
 export default function ConflictMap({ conflicts, selected, onSelect }) {
   return (
-    <div className="flex-1 rounded-xl overflow-hidden border border-gray-800/50 relative min-h-[400px] lg:min-h-[500px]">
-      {/* Scan line overlay */}
+    <div className="flex-1 rounded-xl overflow-hidden border border-slate-700/30 relative min-h-[400px] lg:min-h-[500px] shadow-2xl shadow-black/20">
       <div className="absolute inset-0 pointer-events-none z-10 scan-line" />
 
       <MapContainer
@@ -123,8 +121,8 @@ export default function ConflictMap({ conflicts, selected, onSelect }) {
         scrollWheelZoom={true}
       >
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/">CARTO</a>'
+          url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
         />
         <FlyToSelected selected={selected} />
         {conflicts.map(conflict => (
@@ -138,17 +136,24 @@ export default function ConflictMap({ conflicts, selected, onSelect }) {
       </MapContainer>
 
       {/* Map legend */}
-      <div className="absolute bottom-4 left-4 z-20 bg-gray-900/90 backdrop-blur-sm border border-gray-700/50 rounded-lg p-3 space-y-1.5">
-        <div className="text-[9px] text-gray-500 font-mono uppercase tracking-wider mb-1">Severity</div>
+      <div className="absolute bottom-4 left-4 z-20 glass rounded-lg p-3 space-y-1.5">
+        <div className="text-[9px] text-slate-500 font-mono uppercase tracking-wider mb-1">Severity</div>
         {Object.entries(severityConfig).map(([key, val]) => (
           <div key={key} className="flex items-center gap-2">
             <div
               className="w-2.5 h-2.5 rounded-full"
-              style={{ backgroundColor: val.color }}
+              style={{ backgroundColor: val.color, boxShadow: `0 0 6px ${val.color}40` }}
             />
-            <span className="text-[10px] text-gray-400">{val.label}</span>
+            <span className="text-[10px] text-slate-400">{val.label}</span>
           </div>
         ))}
+      </div>
+
+      {/* Conflict count badge */}
+      <div className="absolute top-4 right-4 z-20 glass rounded-lg px-3 py-1.5">
+        <span className="text-xs font-mono text-slate-400">
+          <span className="text-cyan-400 font-medium">{conflicts.length}</span> zones tracked
+        </span>
       </div>
     </div>
   )

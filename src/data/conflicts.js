@@ -399,11 +399,11 @@ export const conflicts = [
 ]
 
 export const severityConfig = {
-  critical: { label: 'Critical', color: '#ef4444', pulse: true, icon: '🔴' },
-  high:     { label: 'High',     color: '#f97316', pulse: true, icon: '🟠' },
-  medium:   { label: 'Medium',   color: '#eab308', pulse: false, icon: '🟡' },
-  low:      { label: 'Low',      color: '#22c55e', pulse: false, icon: '🟢' },
-  watchlist: { label: 'Watchlist', color: '#6366f1', pulse: false, icon: '🔵' },
+  critical: { label: 'Critical', color: '#ff4757', pulse: true, icon: '🔴', cardClass: 'card-critical', glowClass: 'glow-critical' },
+  high:     { label: 'High',     color: '#ff6348', pulse: true, icon: '🟠', cardClass: 'card-high', glowClass: 'glow-high' },
+  medium:   { label: 'Medium',   color: '#ffa502', pulse: false, icon: '🟡', cardClass: 'card-medium', glowClass: 'glow-medium' },
+  low:      { label: 'Low',      color: '#2ed573', pulse: false, icon: '🟢', cardClass: 'card-low', glowClass: '' },
+  watchlist: { label: 'Watchlist', color: '#5352ed', pulse: false, icon: '🔵', cardClass: 'card-watchlist', glowClass: '' },
 }
 
 export const regionList = [...new Set(conflicts.map(c => c.region))].sort()

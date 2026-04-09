@@ -2,105 +2,138 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─── Design Tokens ─── */
 :root {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   color-scheme: dark;
+
+  --surface-base: #0a0f1e;
+  --surface-raised: #111827;
+  --surface-overlay: #1e293b;
+  --border-subtle: rgba(51, 65, 85, 0.4);
+  --border-active: rgba(51, 65, 85, 0.7);
+
+  --accent: #22d3ee;
+  --accent-glow: rgba(34, 211, 238, 0.15);
+
+  --severity-critical: #ff4757;
+  --severity-high: #ff6348;
+  --severity-medium: #ffa502;
+  --severity-low: #2ed573;
+  --severity-watchlist: #5352ed;
 }
 
 body {
   margin: 0;
-  background: #030712;
-  color: #f3f4f6;
+  background: var(--surface-base);
+  color: #e2e8f0;
   overflow-x: hidden;
 }
 
-/* Leaflet overrides for dark theme */
+/* ─── Leaflet Dark Theme (CartoDB Dark Matter) ─── */
 .leaflet-container {
-  background: #0a0f1a !important;
+  background: #0d1117 !important;
   border-radius: 0.75rem;
 }
 
-.leaflet-tile-pane {
-  filter: brightness(0.6) invert(1) contrast(3) hue-rotate(200deg) saturate(0.3) brightness(0.7);
-}
-
 .leaflet-control-zoom a {
-  background: #1f2937 !important;
-  color: #9ca3af !important;
-  border-color: #374151 !important;
+  background: #1e293b !important;
+  color: #94a3b8 !important;
+  border-color: #334155 !important;
+  transition: all 0.2s ease;
 }
 
 .leaflet-control-zoom a:hover {
-  background: #374151 !important;
-  color: #f3f4f6 !important;
+  background: #334155 !important;
+  color: #f1f5f9 !important;
 }
 
 .leaflet-control-attribution {
-  background: rgba(3, 7, 18, 0.8) !important;
-  color: #6b7280 !important;
+  background: rgba(10, 15, 30, 0.85) !important;
+  color: #475569 !important;
   font-size: 9px !important;
+  backdrop-filter: blur(8px);
 }
 
 .leaflet-control-attribution a {
-  color: #6b7280 !important;
+  color: #475569 !important;
 }
 
-/* Pulse animation for critical markers */
+/* ─── Marker Animations ─── */
 @keyframes conflict-pulse {
   0%, 100% {
     transform: scale(1);
-    opacity: 1;
+    opacity: 0.8;
   }
   50% {
-    transform: scale(1.8);
+    transform: scale(2);
     opacity: 0;
   }
 }
 
 .conflict-marker-pulse {
-  animation: conflict-pulse 2s ease-in-out infinite;
+  animation: conflict-pulse 2.5s ease-in-out infinite;
 }
 
-/* Custom scrollbar */
+/* ─── Custom Scrollbar ─── */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #111827;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #374151;
-  border-radius: 3px;
+  background: #334155;
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #4b5563;
+  background: #475569;
 }
 
-/* Glow effects */
-.glow-red {
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.3), 0 0 60px rgba(239, 68, 68, 0.1);
+/* ─── Glassmorphism Utilities ─── */
+.glass {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(51, 65, 85, 0.3);
 }
 
-.glow-orange {
-  box-shadow: 0 0 20px rgba(249, 115, 22, 0.3), 0 0 60px rgba(249, 115, 22, 0.1);
+.glass-elevated {
+  background: rgba(30, 41, 59, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(51, 65, 85, 0.4);
 }
 
-.glow-yellow {
-  box-shadow: 0 0 20px rgba(234, 179, 8, 0.2), 0 0 60px rgba(234, 179, 8, 0.05);
+/* ─── Glow Effects ─── */
+.glow-critical {
+  box-shadow: 0 0 20px rgba(255, 71, 87, 0.2), 0 0 60px rgba(255, 71, 87, 0.05);
 }
 
-/* Grid scan line effect */
+.glow-high {
+  box-shadow: 0 0 20px rgba(255, 99, 72, 0.2), 0 0 60px rgba(255, 99, 72, 0.05);
+}
+
+.glow-medium {
+  box-shadow: 0 0 15px rgba(255, 165, 2, 0.15), 0 0 40px rgba(255, 165, 2, 0.05);
+}
+
+.glow-accent {
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.2), 0 0 60px rgba(34, 211, 238, 0.05);
+}
+
+/* ─── Scan Line Overlay ─── */
 .scan-line {
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(34, 197, 94, 0.03) 50%,
+    rgba(34, 211, 238, 0.02) 50%,
     transparent 100%
   );
-  animation: scan 8s linear infinite;
+  animation: scan 10s linear infinite;
 }
 
 @keyframes scan {
@@ -108,29 +141,87 @@ body {
   100% { transform: translateY(100%); }
 }
 
-/* Leaflet popup dark theme */
+/* ─── CSS Marquee Ticker ─── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-scroll {
+  animation: marquee 40s linear infinite;
+  will-change: transform;
+}
+
+.ticker-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Leaflet Popup Dark Theme ─── */
 .leaflet-popup-content-wrapper {
-  background: #1f2937 !important;
-  color: #f3f4f6 !important;
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
   border-radius: 0.75rem !important;
-  border: 1px solid #374151 !important;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid #334155 !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 0, 0, 0.3) !important;
 }
 
 .leaflet-popup-tip {
-  background: #1f2937 !important;
-  border: 1px solid #374151 !important;
+  background: #1e293b !important;
+  border: 1px solid #334155 !important;
 }
 
 .leaflet-popup-close-button {
-  color: #9ca3af !important;
+  color: #94a3b8 !important;
+  transition: color 0.2s;
 }
 
 .leaflet-popup-close-button:hover {
-  color: #f3f4f6 !important;
+  color: #f1f5f9 !important;
 }
 
 .leaflet-popup-content {
   margin: 12px 16px !important;
   font-family: 'Inter', system-ui, sans-serif !important;
+}
+
+/* ─── Gradient Utilities ─── */
+.gradient-border-top {
+  position: relative;
+}
+
+.gradient-border-top::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #ff4757, #ff6348, #ffa502);
+  border-radius: 2px 2px 0 0;
+}
+
+/* ─── Severity Gradient Cards ─── */
+.card-critical {
+  background: linear-gradient(135deg, rgba(255, 71, 87, 0.08), rgba(255, 71, 87, 0.02));
+  border-color: rgba(255, 71, 87, 0.2);
+}
+
+.card-high {
+  background: linear-gradient(135deg, rgba(255, 99, 72, 0.08), rgba(255, 99, 72, 0.02));
+  border-color: rgba(255, 99, 72, 0.2);
+}
+
+.card-medium {
+  background: linear-gradient(135deg, rgba(255, 165, 2, 0.06), rgba(255, 165, 2, 0.01));
+  border-color: rgba(255, 165, 2, 0.15);
+}
+
+.card-low {
+  background: linear-gradient(135deg, rgba(46, 213, 115, 0.06), rgba(46, 213, 115, 0.01));
+  border-color: rgba(46, 213, 115, 0.15);
+}
+
+.card-watchlist {
+  background: linear-gradient(135deg, rgba(83, 82, 237, 0.06), rgba(83, 82, 237, 0.01));
+  border-color: rgba(83, 82, 237, 0.15);
 }
