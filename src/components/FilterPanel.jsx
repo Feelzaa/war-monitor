@@ -30,7 +30,7 @@ export default function FilterPanel({ filters, setFilters, searchRef }) {
             placeholder="Search conflicts, countries, parties..."
             value={filters.search}
             onChange={e => setFilters(prev => ({ ...prev, search: e.target.value }))}
-            className="w-full bg-slate-800/60 border border-slate-700/40 rounded-lg pl-8 pr-8 py-2 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all"
+            className="w-full bg-slate-800/60 border border-slate-700/40 rounded-lg pl-8 pr-8 py-3 lg:py-2 text-sm text-slate-200 placeholder-slate-600 focus:outline-none focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/20 transition-all"
           />
           {filters.search && (
             <button
@@ -83,7 +83,7 @@ export default function FilterPanel({ filters, setFilters, searchRef }) {
                     <button
                       key={s}
                       onClick={() => toggle('severity', s)}
-                      className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all border ${
+                      className={`px-3 py-2 lg:px-2 lg:py-1 rounded-md text-xs lg:text-[11px] font-medium transition-all border min-h-[44px] lg:min-h-0 ${
                         filters.severity.includes(s)
                           ? ''
                           : 'bg-slate-800/50 text-slate-500 hover:text-slate-300 border-transparent hover:border-slate-600/50'
@@ -112,7 +112,7 @@ export default function FilterPanel({ filters, setFilters, searchRef }) {
                     <button
                       key={r}
                       onClick={() => toggle('region', r)}
-                      className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all border ${
+                      className={`px-3 py-2 lg:px-2 lg:py-1 rounded-md text-xs lg:text-[11px] font-medium transition-all border min-h-[44px] lg:min-h-0 ${
                         filters.region.includes(r)
                           ? 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30'
                           : 'bg-slate-800/50 text-slate-500 hover:text-slate-300 border-transparent hover:border-slate-600/50'
@@ -132,7 +132,7 @@ export default function FilterPanel({ filters, setFilters, searchRef }) {
                     <button
                       key={t}
                       onClick={() => toggle('type', t)}
-                      className={`px-2 py-1 rounded-md text-[11px] font-medium transition-all border ${
+                      className={`px-3 py-2 lg:px-2 lg:py-1 rounded-md text-xs lg:text-[11px] font-medium transition-all border min-h-[44px] lg:min-h-0 ${
                         filters.type.includes(t)
                           ? 'bg-cyan-500/15 text-cyan-400 border-cyan-500/30'
                           : 'bg-slate-800/50 text-slate-500 hover:text-slate-300 border-transparent hover:border-slate-600/50'

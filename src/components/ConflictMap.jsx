@@ -107,7 +107,7 @@ function ConflictMarker({ conflict, isSelected, onSelect }) {
 
 export default function ConflictMap({ conflicts, selected, onSelect }) {
   return (
-    <div className="flex-1 rounded-xl overflow-hidden border border-slate-700/30 relative min-h-[400px] lg:min-h-[500px] shadow-2xl shadow-black/20">
+    <div className="flex-1 rounded-xl overflow-hidden border border-slate-700/30 relative min-h-[60vh] lg:min-h-[500px] shadow-2xl shadow-black/20">
       <div className="absolute inset-0 pointer-events-none z-10 scan-line" />
 
       <MapContainer

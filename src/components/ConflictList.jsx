@@ -64,7 +64,7 @@ const ConflictList = forwardRef(function ConflictList({ conflicts, selected, onS
         <select
           value={sortBy}
           onChange={e => setSortBy(e.target.value)}
-          className="text-[10px] bg-slate-800/60 border border-slate-700/40 rounded-md px-1.5 py-0.5 text-slate-400 focus:outline-none focus:border-cyan-500/40 cursor-pointer"
+          className="text-xs lg:text-[10px] bg-slate-800/60 border border-slate-700/40 rounded-md px-2 py-1.5 lg:px-1.5 lg:py-0.5 text-slate-400 focus:outline-none focus:border-cyan-500/40 cursor-pointer min-h-[44px] lg:min-h-0"
         >
           {SORT_OPTIONS.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -87,7 +87,7 @@ const ConflictList = forwardRef(function ConflictList({ conflicts, selected, onS
                 exit={{ opacity: 0, x: -10 }}
                 transition={{ duration: 0.2, delay: i * 0.02 }}
                 onClick={() => onSelect(isSelected ? null : conflict)}
-                className={`w-full text-left px-3 py-2.5 border-b border-slate-800/30 transition-all hover:bg-slate-800/40 group ${
+                className={`w-full text-left px-3 py-4 lg:py-2.5 border-b border-slate-800/30 transition-all hover:bg-slate-800/40 group ${
                   isSelected
                     ? 'bg-slate-800/60 border-l-2'
                     : isFocused
